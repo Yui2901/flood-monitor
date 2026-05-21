@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitor de Alagamentos — Belém/PA</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <span class="nav-icon">🌊</span>
+      <span>Monitor de Alagamentos — Belém/PA</span>
+    </div>
+    <div class="navbar-links">
+      <a href="index.html" class="active">Mapa</a>
+      <a href="denuncia.html">Fazer Denúncia</a>
+      <a href="admin.html" id="nav-admin">Área Restrita</a>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Legenda</h2>
+      </div>
+
+      <div class="legend-section">
+        <h3>Áreas de Risco</h3>
+        <div class="legend-item"><span class="legend-dot risco-critico"></span> Crítico</div>
+        <div class="legend-item"><span class="legend-dot risco-alto"></span> Alto</div>
+        <div class="legend-item"><span class="legend-dot risco-medio"></span> Médio</div>
+        <div class="legend-item"><span class="legend-dot risco-baixo"></span> Baixo</div>
+      </div>
+
+      <div class="legend-section">
+        <h3>Ocorrências</h3>
+        <div class="legend-item"><span class="legend-dot alagado-critico"></span> Alagamento Crítico</div>
+        <div class="legend-item"><span class="legend-dot alagado-alto"></span> Alagamento Alto</div>
+        <div class="legend-item"><span class="legend-dot alagado-medio"></span> Alagamento Médio</div>
+        <div class="legend-item"><span class="legend-dot alagado-baixo"></span> Alagamento Baixo</div>
+        <div class="legend-item"><span class="legend-dot denuncia-pendente"></span> Denúncia Pendente</div>
+      </div>
+
+      <div class="stats-box" id="stats-box">
+        <h3>Situação Atual</h3>
+        <div class="stat-row"><span>Denúncias pendentes</span><strong id="stat-pendente">—</strong></div>
+        <div class="stat-row"><span>Áreas alagadas</span><strong id="stat-alagadas">—</strong></div>
+        <div class="stat-row"><span>Áreas de risco</span><strong id="stat-risco">—</strong></div>
+      </div>
+
+      <div class="sidebar-filters">
+        <h3>Filtros</h3>
+        <label><input type="checkbox" id="filter-risco" checked> Áreas de Risco</label>
+        <label><input type="checkbox" id="filter-alagados" checked> Áreas Alagadas</label>
+        <label><input type="checkbox" id="filter-denuncias" checked> Denúncias Pendentes</label>
+      </div>
+
+      <a href="denuncia.html" class="btn-denuncia-sidebar">
+        <span>⚠️</span> Reportar Alagamento
+      </a>
+    </aside>
+
+    <main class="map-container">
+      <div id="map"></div>
+      <div class="map-update">
+        <span id="ultima-atualizacao">Atualizando...</span>
+        <button onclick="carregarMapa()" class="btn-refresh">↻ Atualizar</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/mapa.js"></script>
+</body>
+</html>

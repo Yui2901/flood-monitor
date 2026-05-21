@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin — Monitor de Alagamentos Belém</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <span class="nav-icon">🌊</span>
+      <span>Monitor de Alagamentos — Belém/PA</span>
+    </div>
+    <div class="navbar-links">
+      <a href="index.html">Mapa</a>
+      <span id="nav-adm-nome" style="color:#a5f3fc;font-size:0.9rem"></span>
+      <a href="#" id="btn-logout" onclick="logout()">Sair</a>
+    </div>
+  </nav>
+
+  <div class="dashboard-layout">
+    <aside class="dash-sidebar">
+      <nav class="dash-nav">
+        <button class="dash-nav-btn active" data-tab="denuncias">
+          <span>📋</span> Denúncias
+          <span class="badge" id="badge-pendente"></span>
+        </button>
+        <button class="dash-nav-btn" data-tab="aprovadas">
+          <span>✅</span> Áreas Alagadas
+        </button>
+        <button class="dash-nav-btn" data-tab="risco">
+          <span>⚠️</span> Áreas de Risco
+        </button>
+        <button class="dash-nav-btn" data-tab="admins">
+          <span>👤</span> Administradores
+        </button>
+      </nav>
+    </aside>
+
+    <main class="dash-content">
+
+      <!-- DENÚNCIAS -->
+      <section id="tab-denuncias" class="tab-section active">
+        <div class="section-header">
+          <h2>Denúncias Recebidas</h2>
+          <div class="filter-group">
+            <select id="filtro-status" onchange="carregarDenuncias()">
+              <option value="">Todas</option>
+              <option value="pendente" selected>Pendentes</option>
+              <option value="aprovada">Aprovadas</option>
+              <option value="rejeitada">Rejeitadas</option>
+            </select>
+          </div>
+        </div>
+        <div id="lista-denuncias" class="card-list">
+          <div class="loading">Carregando...</div>
+        </div>
+      </section>
+
+      <!-- ÁREAS APROVADAS -->
+      <section id="tab-aprovadas" class="tab-section">
+        <div class="section-header">
+          <h2>Áreas Alagadas Confirmadas</h2>
+        </div>
+        <div id="lista-aprovadas" class="card-list">
+          <div class="loading">Carregando...</div>
+        </div>
+      </section>
+
+      <!-- ÁREAS DE RISCO -->
+      <section id="tab-risco" class="tab-section">
+        <div class="section-header">
+          <h2>Áreas de Risco</h2>
+          <button class="btn-primary" onclick="abrirModalRisco()">+ Nova Área</button>
+        </div>
+        <div id="lista-risco" class="card-list">
+          <div class="loading">Carregando...</div>
+        </div>
+      </section>
+
+      <!-- ADMINISTRADORES -->
+      <section id="tab-admins" class="tab-section">
+        <div class="section-header">
+          <h2>Administradores</h2>
+          <button class="btn-primary" onclick="abrirModalAdmin()">+ Novo Admin</button>
+        </div>
+        <div id="lista-admins" class="card-list">
+          <div class="loading">Carregando...</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal Verificar Denúncia -->
+  <div id="modal-verificar" class="modal hidden">
+    <div class="modal-overlay" onclick="fecharModal('modal-verificar')"></div>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Verificar Denúncia</h3>
+        <button onclick="fecharModal('modal-verificar')" class="modal-close">✕</button>
+      </div>
+      <div id="modal-verificar-conteudo"></div>
+    </div>
+  </div>
+
+  <!-- Modal Nova Área de Risco -->
+  <div id="modal-risco" class="modal hidden">
+    <div class="modal-overlay" onclick="fecharModal('modal-risco')"></div>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Nova Área de Risco</h3>
+        <button onclick="fecharModal('modal-risco')" class="modal-close">✕</button>
+      </div>
+      <form id="form-risco">
+        <div class="form-group">
+          <label>Nome da área *</label>
+          <input type="text" id="risco-nome" required placeholder="Ex: Baixada do Jurunas">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Bairro</label>
+            <input type="text" id="risco-bairro" placeholder="Bairro">
+          </div>
+          <div class="form-group">
+            <label>Nível de risco</label>
+            <select id="risco-nivel">
+              <option value="baixo">Baixo</option>
+              <option value="medio" selected>Médio</option>
+              <option value="alto">Alto</option>
+              <option value="critico">Crítico</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Descrição</label>
+          <textarea id="risco-descricao" rows="2" placeholder="Descreva os riscos da área"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Latitude *</label>
+            <input type="number" id="risco-lat" step="any" required placeholder="-1.4558">
+          </div>
+          <div class="form-group">
+            <label>Longitude *</label>
+            <input type="number" id="risco-lng" step="any" required placeholder="-48.4902">
+          </div>
+        </div>
+        <div id="map-risco-modal" style="height:220px;border-radius:8px;margin-bottom:12px;"></div>
+        <p style="font-size:0.8rem;color:#94a3b8;margin-bottom:12px;">💡 Clique no mapa para definir a localização</p>
+        <div id="msg-risco" class="alert hidden"></div>
+        <button type="submit" class="btn-submit">Cadastrar Área</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Novo Admin -->
+  <div id="modal-admin" class="modal hidden">
+    <div class="modal-overlay" onclick="fecharModal('modal-admin')"></div>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Novo Administrador</h3>
+        <button onclick="fecharModal('modal-admin')" class="modal-close">✕</button>
+      </div>
+      <form id="form-novo-admin">
+        <div class="form-group">
+          <label>Nome *</label>
+          <input type="text" id="new-adm-nome" required placeholder="Nome completo">
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="new-adm-email" required placeholder="email@belem.pa.gov.br">
+        </div>
+        <div class="form-group">
+          <label>Senha *</label>
+          <input type="password" id="new-adm-senha" required placeholder="Mínimo 6 caracteres" minlength="6">
+        </div>
+        <div id="msg-novo-adm" class="alert hidden"></div>
+        <button type="submit" class="btn-submit">Criar Administrador</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

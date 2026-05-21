@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fazer Denúncia — Monitor de Alagamentos Belém</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <span class="nav-icon">🌊</span>
+      <span>Monitor de Alagamentos — Belém/PA</span>
+    </div>
+    <div class="navbar-links">
+      <a href="index.html">Mapa</a>
+      <a href="denuncia.html" class="active">Fazer Denúncia</a>
+      <a href="admin.html">Área Restrita</a>
+    </div>
+  </nav>
+
+  <div class="form-page">
+    <div class="form-card">
+      <div class="form-header">
+        <h1>⚠️ Reportar Alagamento</h1>
+        <p>Preencha os dados abaixo para registrar uma ocorrência. Sua denúncia será analisada pela equipe.</p>
+      </div>
+
+      <div id="msg-sucesso" class="alert alert-success hidden">
+        ✅ Denúncia registrada com sucesso! Nossa equipe irá analisar em breve.
+      </div>
+      <div id="msg-erro" class="alert alert-error hidden"></div>
+
+      <form id="form-denuncia" enctype="multipart/form-data">
+        <div class="form-section">
+          <h2>Identificação (opcional)</h2>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nome">Seu nome</label>
+              <input type="text" id="nome" name="nome_denunciante" placeholder="Deixe em branco para ser anônimo">
+            </div>
+            <div class="form-group">
+              <label for="telefone">Telefone</label>
+              <input type="tel" id="telefone" name="telefone" placeholder="(91) 99999-9999">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Ocorrência *</h2>
+          <div class="form-group">
+            <label for="descricao">Descrição do alagamento *</label>
+            <textarea id="descricao" name="descricao" rows="3" required placeholder="Descreva a situação: rua alagada, altura da água, obstáculos..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nivel_agua">Nível da água *</label>
+              <select id="nivel_agua" name="nivel_agua" required>
+                <option value="baixo">🟡 Baixo — Calçada molhada</option>
+                <option value="medio" selected>🟠 Médio — Cobre o pé</option>
+                <option value="alto">🔴 Alto — Cobre o joelho</option>
+                <option value="critico">⚫ Crítico — Risco de vida</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="foto">Foto (opcional)</label>
+              <input type="file" id="foto" name="foto" accept="image/*">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Localização *</h2>
+          <p class="map-hint">📍 Clique no mapa para marcar o local do alagamento, ou use sua localização atual.</p>
+
+          <div class="location-actions">
+            <button type="button" id="btn-minha-loc" class="btn-outline">
+              📍 Usar minha localização
+            </button>
+            <span id="loc-status" class="loc-status"></span>
+          </div>
+
+          <div id="map-denuncia"></div>
+
+          <div class="coords-row">
+            <div class="form-group">
+              <label>Latitude</label>
+              <input type="text" id="lat" name="latitude" readonly required placeholder="Clique no mapa">
+            </div>
+            <div class="form-group">
+              <label>Longitude</label>
+              <input type="text" id="lng" name="longitude" readonly required placeholder="Clique no mapa">
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btn-submit">
+          Enviar Denúncia
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/denuncia.js"></script>
+</body>
+</html>
