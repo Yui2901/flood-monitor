@@ -1,0 +1,110 @@
+{
+  "adms": [
+    {
+      "id": 1,
+      "nome": "Administrador",
+      "email": "admin@belem.pa.gov.br",
+      "senha_hash": "$2a$10$l29L8RfxFBUntfidDxWGaenFSLlSPMh8r7KF3h.hjeu5Z7pCfdb3q",
+      "criado_em": "2026-05-22T18:25:04.224Z"
+    }
+  ],
+  "areas_de_risco": [
+    {
+      "id": 1,
+      "nome": "Baixada do Jurunas",
+      "descricao": "Região historicamente afetada por alagamentos",
+      "latitude": -1.47,
+      "longitude": -48.485,
+      "nivel_risco": "critico",
+      "bairro": "Jurunas",
+      "criado_em": "2026-05-22T18:25:04.224Z"
+    },
+    {
+      "id": 2,
+      "nome": "Av. Almirante Barroso",
+      "descricao": "Alagamentos frequentes em períodos chuvosos",
+      "latitude": -1.455,
+      "longitude": -48.478,
+      "nivel_risco": "alto",
+      "bairro": "Marco",
+      "criado_em": "2026-05-22T18:25:04.224Z"
+    },
+    {
+      "id": 3,
+      "nome": "Passagem São Jorge",
+      "descricao": "Área de risco em chuvas intensas",
+      "latitude": -1.462,
+      "longitude": -48.492,
+      "nivel_risco": "alto",
+      "bairro": "Guamá",
+      "criado_em": "2026-05-22T18:25:04.224Z"
+    },
+    {
+      "id": 4,
+      "nome": "Rua dos Mundurucus",
+      "descricao": "Baixada com histórico de alagamentos",
+      "latitude": -1.468,
+      "longitude": -48.496,
+      "nivel_risco": "medio",
+      "bairro": "Umarizal",
+      "criado_em": "2026-05-22T18:25:04.224Z"
+    },
+    {
+      "id": 5,
+      "nome": "Canal do Tucunduba",
+      "descricao": "Transbordamento em épocas de chuva",
+      "latitude": -1.481,
+      "longitude": -48.47,
+      "nivel_risco": "critico",
+      "bairro": "Guamá",
+      "criado_em": "2026-05-22T18:25:04.224Z"
+    },
+    {
+      "id": 6,
+      "nome": "Av. Perimetral",
+      "descricao": "Pontos de alagamento recorrentes",
+      "latitude": -1.448,
+      "longitude": -48.464,
+      "nivel_risco": "medio",
+      "bairro": "Sacramenta",
+      "criado_em": "2026-05-22T18:25:04.224Z"
+    },
+    {
+      "id": 7,
+      "nome": "Baixada de Campina",
+      "descricao": "Área central com risco de alagamento",
+      "latitude": -1.453,
+      "longitude": -48.501,
+      "nivel_risco": "alto",
+      "bairro": "Campina",
+      "criado_em": "2026-05-22T18:25:04.224Z"
+    },
+    {
+      "id": 8,
+      "nome": "Conjunto Satélite",
+      "descricao": "Região periférica com problemas de drenagem",
+      "latitude": -1.423,
+      "longitude": -48.456,
+      "nivel_risco": "medio",
+      "bairro": "Satélite",
+      "criado_em": "2026-05-22T18:25:04.224Z"
+    }
+  ],
+  "denuncias": [
+    {
+      "id": 1,
+      "nome_denunciante": "Anônimo",
+      "telefone": null,
+      "descricao": "Teste final",
+      "latitude": -1.4558,
+      "longitude": -48.4902,
+      "foto_url": null,
+      "nivel_agua": "medio",
+      "status": "pendente",
+      "adm_id": null,
+      "criado_em": "2026-05-22T18:25:22.771Z",
+      "verificado_em": null
+    }
+  ],
+  "areas_aprovadas": []
+}
